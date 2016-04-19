@@ -1,0 +1,151 @@
+.wrap {
+  position: fixed;
+  z-index: 8888;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-main {
+  font-size: 50px;
+  position: relative;
+  width: 2em;
+  height: 2em;
+}
+
+.loading-icon-wrap,
+.loading-icon,
+.loading-bottom {
+  position: absolute;
+  width: 2em;
+  height: 2em;
+  transform-origin: 50% 50%;
+}
+
+.loading-icon,
+.loading-bottom {
+  background-image: url('./assets/loading.svg');
+  background-repeat: no-repeat;
+  background-size: 420px 420px;
+}
+
+/*
+ * icons
+ */
+
+.loading-icon {
+  animation: loading-icon-ani 5.6s infinite steps(1);
+}
+
+@keyframes loading-icon-ani {
+  0%,
+  100% {
+    background-position: 50% 6.25%;
+  }
+
+  12.5% {
+    background-position: 93.75% 6.25%;
+  }
+
+  25% {
+    background-position: 6.25% 50%;
+  }
+
+  37.5% {
+    background-position: 50% 50%;
+  }
+
+  50% {
+    background-position: 93.75% 50%;
+  }
+
+  62.5% {
+    background-position: 6.25% 93.75%;
+  }
+
+  75% {
+    background-position: 50% 93.75%;
+  }
+
+  87.5% {
+    background-position: 93.75% 93.75%;
+  }
+}
+
+/*
+ * icon wrap
+ */
+
+.loading-icon-wrap {
+  z-index: 10;
+  bottom: 1em;
+  animation: loading-icon-wrap-ani .7s ease-in-out infinite;
+}
+
+@keyframes loading-icon-wrap-ani {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1em);
+  }
+}
+
+/*
+ * bottom
+ */
+
+.loading-bottom {
+  bottom: 0;
+  animation: loading-bottom-ani .7s ease-in-out infinite;
+  background-position: 6.25% 6.25%;
+}
+
+@keyframes loading-bottom-ani {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(.3);
+  }
+}
+
+.error-main {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  img {
+    display: block;
+    width: 136px;
+    height: 195px;
+  }
+
+  h2 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 33px 0;
+    color: #666;
+  }
+
+  a {
+    font-size: 32px;
+    display: flex;
+    width: 250px;
+    height: 80px;
+    color: #fff;
+    border-radius: 8px;
+    background: #56d176;
+
+    align-items: center;
+    justify-content: center;
+  }
+}
