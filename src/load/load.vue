@@ -1,6 +1,6 @@
 <template>
   <div class="wrap"
-       v-if="status !== 0">
+       v-if="status === 1 || status === 2">
     <div class="loading-main"
          v-if="status === 1">
       <div class="loading-icon-wrap">
@@ -23,7 +23,7 @@
     props: {
       status: {
         type: Number,
-        default: 0
+        default: 0 // 0 不显示，1 加载中，2 失败
       },
       reload: {
         type: Function,
