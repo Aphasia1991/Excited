@@ -12,6 +12,16 @@
   justify-content: center;
 }
 
+.wrap-transition {
+  transition: opacity .3s;
+  opacity: 1;
+}
+
+.wrap-enter,
+.wrap-leave {
+  opacity: 0;
+}
+
 .loading-main {
   font-size: 50px;
   position: relative;

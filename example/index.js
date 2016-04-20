@@ -1,23 +1,26 @@
-import load from '../src/load/load.vue';
-
 Vue.config.debug = true;
 
 new Vue({
   el: 'body',
   components: {
-    'load': load
+    'load': require('../src/load/load.vue'),
+    'lazy': require('../src/lazy/lazy.vue')
   },
   data: () => ({
-    loader: 1
+    loader: 0
   }),
   methods: {
-    refresh () {
-      this.loader = 1
+    refresh() {
+      this.loader = 1;
     }
   },
-  ready () {
+  ready() {
     setTimeout(() => {
-      this.loader = 2
-    }, 5000)
+      this.loader = 1;
+
+      setTimeout(() => {
+        this.loader = 0;
+      }, 5000);
+    }, 5000);
   }
-})
+});
