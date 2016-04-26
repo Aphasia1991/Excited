@@ -1,13 +1,22 @@
 /*eslint-env node */
-module.exports = Object.assign({
-  entry: require('./entries'),
+const dirMap = require('./entries');
+const creatLib = (libName, fileName) => ({
+  entry: `./src/${libName}`,
   output: {
-    library: 'M[name]',
+    library: libName,
     libraryTarget: 'umd',
-    filename: '[name].min.js',
+    filename: `${fileName}.min.js`,
     path: './dist',
   },
   externals: {
     'vue': 'Vue',
-  },
-}, require('./webpack.base'));
+  }
+});
+const libMap = [];
+
+dirMap.forEach((dirName) => {
+  const lib = Object.assign(creatLib(dirName, dirName.toLowerCase()), require('./webpack.base'));
+  libMap.push(lib);
+});
+
+module.exports = libMap;

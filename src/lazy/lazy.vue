@@ -1,14 +1,16 @@
 <template>
   <div class="wrap"
-       v-show="status === 4 || status === 5"
+       v-show="status === 'load' || status === 'fail'"
        @click="reload">
+
     <span class="loading"
-          v-show="status === 4">
+          v-show="status === 'load'">
       <img src="./assets/load.svg">
       <span>正在加载...</span>
     </span>
 
-    <span v-show="status === 5">加载失败，点此重新加载</span>
+    <span v-show="status === 'fail'">加载失败，点此重新加载</span>
+
   </div>
 </template>
 
@@ -16,9 +18,10 @@
   export default {
     props: {
       status: {
-        type: Number,
-        default: 3 // 3 空闲，4 加载中，5 失败
+        type: String,
+        default: ''
       },
+
       load: {
         type: Function
       }
@@ -28,9 +31,17 @@
       timer: null
     }),
 
+    watch: {
+      status(val) {
+        if (val === 'lock') {
+          window.removeEventListener('scroll', this.scrollEvent);
+        }
+      }
+    },
+
     methods: {
       scrollEvent() {
-        if (this.status !== 3) return;
+        if (this.status !== 'ready') return;
 
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
@@ -43,7 +54,7 @@
       },
 
       reload() {
-        if (this.status !== 5) return;
+        if (this.status !== 'fail') return;
         this.load();
       }
     },
