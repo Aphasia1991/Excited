@@ -1,10 +1,10 @@
 <template>
   <div class="wrap"
-       v-show="status === 'load' || status === 'fail'"
+       v-show="status === 1 || status === 2"
        transition="wrap">
 
     <div class="loading-main"
-         v-show="status === 'load'">
+         v-show="status === 1">
       <div class="loading-icon-wrap">
         <div class="loading-icon"></div>
       </div>
@@ -12,10 +12,10 @@
     </div>
 
     <div class="error-main"
-         v-if="status === 'fail'">
+         v-if="status === 2">
       <img src="./assets/error.png"></img>
       <h2>加载失败了</h2>
-      <a @click="reload">重新加载</a>
+      <a @click="method">重新加载</a>
     </div>
 
   </div>
@@ -25,10 +25,10 @@
   export default {
     props: {
       status: {
-        type: String,
-        default: ''
+        type: Number,
+        default: 0 // 0 不显示，1 加载中，2 失败
       },
-      reload: {
+      method: {
         type: Function,
         default () {
           window.location.reload(true);

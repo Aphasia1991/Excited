@@ -3,32 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <title>Demo</title>
-  <style>
-  body {
-    font-family: PingFangSC-Regular;
-  }
-  </style>
+  <style>body { font-family: PingFangSC-Regular; }</style>
 </head>
 <body>
-  <load :status="loader"
-         :reload="refresh"></load>
+  <br>A<br><br><br><br>
+  <br><br><br><br><br>
+  <br>B<br><br><br><br>
+  <br><br><br><br><br>
+  <br>C<br><br><br><br>
+  <br><br><br><br><br>
+  <br>D<br><br><br><br>
+  <br><br><br><br><br>
+  <br>E<br><br><br><br>
+  <br><br><br><br><br>
+  <br>F<br><br><br><br>
+  <br><br><br><br><br>
+  <br>G<br><br><br><br>
+  <br><br><br><br><br>
+  <br>H<br><br><br><br>
+  <br><br><br><br><br>
+  <br>I<br><br><br><br>
+  <br><br><br><br><br>
+  <br>J<br><br><br><br>
+  <br><br><br><br><br>
+  <br>K<br><br><br><br>
+  <br><br><br><br><br>
+  <br>L<br><br><br><br>
+  <br><br><br><br><br>
+  <br>M<br><br><br><br>
+  <br><br><br><br><br>
+  <br>N<br><br><br><br>
+  <br><br><br><br><br>
+  <br>O<br><br><br><br>
+  <br><br><br><br><br>
 
-  <!-- <br><br><br><br><br>
-  <br><br><br><br><br>
-  <br><br><br><br><br>
-  <br><br><br><br><br>
-  <br><br><br><br><br>
-  <br><br><br><br><br>
-  <br><br><br><br><br>
-  <br><br><br><br><br>
-  <br><br><br><br><br>
-  <br><br><br><br><br>
+  <load :status="status" :method="firstGetData"></load>
+  <lazy :offset="offset" :limit="limit" :method="getData"></lazy>
 
-  <lazy :status="loader"
-        :load="refresh"></lazy> -->
-
+  <script>if (!window.fetch) document.write('<script src="//fe-static.ele.me/github/uglifyjs!github/fetch/v0.11.0/fetch.js"><\/script>');</script>
   <script src="//github.elemecdn.com/amfe/lib-flexible/master/build/flexible.js"></script>
-  <script src="//github.elemecdn.com/vuejs/vue/v1.0.21/dist/vue.min.js"></script>
+  <script src="//github.elemecdn.com/vuejs/vue/v1.0.21/dist/vue.js"></script>
   <script src="/build.js"></script>
 </body>
 </html>
