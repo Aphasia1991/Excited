@@ -41,6 +41,15 @@
       timer: null
     }),
 
+    watch: {
+      // SPA 清空数据时触发
+      offset(val) {
+        if (val !== 0) return;
+        this.page = 0;
+        window.addEventListener('scroll', this.scrollEvent);
+      }
+    },
+
     methods: {
       load() {
         this.page = this.offset;

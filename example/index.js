@@ -6,7 +6,7 @@ const resPurify = (res) => {
   return json.then(Promise.reject.bind(Promise));
 };
 
-new Vue({
+const App = new Vue({
   el: 'body',
 
   components: {
@@ -46,5 +46,9 @@ new Vue({
 
   ready() {
     this.firstGetData();
+
+    setTimeout(() => {
+      this.offset = 0;
+    }, 10000);
   }
 });
