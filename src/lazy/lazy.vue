@@ -88,11 +88,11 @@
       }
     },
 
-    attached() {
+    ready() {
       window.addEventListener('scroll', this.scrollEvent);
     },
 
-    detached() {
+    destroyed() {
       window.removeEventListener('scroll', this.scrollEvent);
     }
   };
