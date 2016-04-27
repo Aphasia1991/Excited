@@ -6,7 +6,7 @@ const resPurify = (res) => {
   return json.then(Promise.reject.bind(Promise));
 };
 
-const App = new Vue({
+new Vue({
   el: 'body',
 
   components: {

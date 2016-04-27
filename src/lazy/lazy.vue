@@ -18,9 +18,7 @@
   export default {
     props: {
       // 触发函数 [必须返回 Promise]
-      method: {
-        type: Function
-      },
+      method: Function,
 
       // 起始值
       offset: {
@@ -41,18 +39,26 @@
       timer: null
     }),
 
-    watch: {
-      // SPA 清空数据时触发
-      offset(val) {
-        if (val !== 0) return;
-        this.page = 0;
-        window.addEventListener('scroll', this.scrollEvent);
+    computed: {
+      offset: {
+        set(newVal) {
+          if (newVal === 0) {
+            // SPA 清空数据时，恢复默认情况
+            this.page = 0;
+            window.addEventListener('scroll', this.scrollEvent);
+          } else if (newVal - this.page < this.limit) {
+            // 响应数少于请求数，移除事件
+            window.removeEventListener('scroll', this.scrollEvent);
+          } else {
+            // 正常情况，缓存页码
+            this.page = this.offset;
+          }
+        }
       }
     },
 
     methods: {
       load() {
-        this.page = this.offset;
         this.status = 1;
         this.method()
           .then(() => {
@@ -65,11 +71,6 @@
 
       scrollEvent() {
         if (this.status !== 0 || this.offset === 0) return;
-
-        if (this.offset - this.page < this.limit) {
-          window.removeEventListener('scroll', this.scrollEvent);
-          return;
-        }
 
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
