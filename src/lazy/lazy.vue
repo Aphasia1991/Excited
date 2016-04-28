@@ -35,24 +35,20 @@
 
     data: () => ({
       status: 0, // 0 等待，1 加载中，2 加载失败
-      page: 0, // 缓存上次的页码
+
+      temp: 0, // 缓存页码
       timer: null
     }),
 
-    computed: {
-      offset: {
-        set(newVal) {
-          if (newVal === 0 && this.page > 0) {
-            // SPA 清空数据时，恢复默认情况
-            this.page = 0;
-            window.addEventListener('scroll', this.scrollEvent);
-          } else if (newVal - this.page < this.limit) {
-            // 响应数少于请求数，移除事件
-            window.removeEventListener('scroll', this.scrollEvent);
-          } else {
-            // 正常情况，缓存页码
-            this.page = this.offset;
-          }
+    watch: {
+      // 当 SAP 清空数据时，重置状态
+      // 当首次（包含外部）加载量不足时，移除事件
+      offset(newVal) {
+        if (newVal === 0) {
+          this.temp = 0;
+          this.addEvent();
+        } else if (newVal < this.limit) {
+          this.rmEvent();
         }
       }
     },
@@ -62,38 +58,56 @@
         this.status = 1;
         this.method()
           .then(() => {
-            this.status = 0;
+            // 新增量少于请求，移除事件
+            if (this.offset - this.temp < this.limit) {
+              this.rmEvent();
+            }
+
+            window.setTimeout(() => {
+              this.status = 0;
+            }, 500);
           })
           .catch(() => {
             this.status = 2;
           });
       },
 
-      scrollEvent() {
-        if (this.status !== 0 || this.offset === 0) return;
-
-        clearTimeout(this.timer);
-        this.timer = setTimeout(() => {
-          const doc = document.documentElement;
-          const offset = doc.offsetHeight - doc.clientHeight - window.pageYOffset;
-          if (offset >= 0 && offset < 100) {
-            this.load();
-          }
-        }, 100);
-      },
-
       reload() {
         if (this.status !== 2) return;
         this.load();
+      },
+
+      lazyLoad() {
+        const doc = document.documentElement;
+        const offset = doc.offsetHeight - doc.clientHeight - window.pageYOffset;
+        if (offset >= 0 && offset < 100) {
+          this.temp = this.offset;
+          this.load();
+        }
+      },
+
+      scrollEvent() {
+        if (this.status !== 0 || this.offset === 0) return;
+
+        window.clearTimeout(this.timer);
+        this.timer = window.setTimeout(this.lazyLoad, 100);
+      },
+
+      addEvent() {
+        window.addEventListener('scroll', this.scrollEvent);
+      },
+
+      rmEvent() {
+        window.removeEventListener('scroll', this.scrollEvent);
       }
     },
 
     ready() {
-      window.addEventListener('scroll', this.scrollEvent);
+      this.addEvent();
     },
 
     destroyed() {
-      window.removeEventListener('scroll', this.scrollEvent);
+      this.rmEvent();
     }
   };
 </script>
