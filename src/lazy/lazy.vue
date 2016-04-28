@@ -42,7 +42,7 @@
     computed: {
       offset: {
         set(newVal) {
-          if (newVal === 0) {
+          if (newVal === 0 && this.page > 0) {
             // SPA 清空数据时，恢复默认情况
             this.page = 0;
             window.addEventListener('scroll', this.scrollEvent);
