@@ -1,6 +1,7 @@
 <template>
   <div class="wrap"
        v-show="status === 1 || status === 2"
+       @touchmove.stop.prevent="resetTop"
        transition="wrap">
 
     <div class="loading-main"
@@ -30,9 +31,15 @@
       },
       method: {
         type: Function,
-        default () {
+        default() {
           window.location.reload(true);
         }
+      }
+    },
+
+    methods: {
+      resetTop() {
+        window.scroll(0, 0);
       }
     }
   };
