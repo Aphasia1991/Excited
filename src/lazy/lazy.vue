@@ -30,6 +30,12 @@
       limit: {
         type: Number,
         default: 10
+      },
+
+      // 触发坐标
+      bottom: {
+        type: Number,
+        default: 100
       }
     },
 
@@ -82,7 +88,7 @@
       lazyLoad() {
         const doc = document.documentElement;
         const offset = doc.offsetHeight - doc.clientHeight - window.pageYOffset;
-        if (offset >= 0 && offset < 100) {
+        if (offset >= 0 && offset < this.bottom) {
           this.load();
         }
       },
