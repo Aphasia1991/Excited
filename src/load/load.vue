@@ -1,7 +1,7 @@
 <template>
   <div class="wrap"
        v-show="status === 1 || status === 2"
-       @touchmove.stop.prevent="resetTop"
+       @touchmove.stop.prevent="touch"
        transition="wrap">
 
     <div class="loading-main"
@@ -38,8 +38,8 @@
     },
 
     methods: {
-      resetTop() {
-        window.scroll(0, 0);
+      touch() {
+        return false;
       }
     }
   };

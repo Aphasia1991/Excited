@@ -1,6 +1,6 @@
 {
   "name": "element",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "eleme web components.",
   "main": "./src/index.js",
   "scripts": {
