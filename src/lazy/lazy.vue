@@ -47,13 +47,14 @@
     }),
 
     watch: {
-      // 当 SAP 清空数据时，重置状态
-      // 当首次（包含外部）加载量不足时，移除事件
+      // 当页码达到请求数时，绑定事件
+      // 当页码小于请求数时，移除事件
       offset(newVal) {
-        if (newVal === 0) {
-          this.temp = 0;
+        if (newVal === this.limit) {
           this.addEvent();
-        } else if (newVal < this.limit) {
+        }
+
+        if (newVal < this.limit) {
           this.rmEvent();
         }
       }
@@ -94,7 +95,8 @@
       },
 
       scrollEvent() {
-        if (this.status !== 0 || this.offset === 0) return;
+        // 有时浏览器不能及时移除事件
+        if (this.status !== 0 || this.offset < this.limit) return;
 
         window.clearTimeout(this.timer);
         this.timer = window.setTimeout(this.lazyLoad, 100);
@@ -107,10 +109,6 @@
       rmEvent() {
         window.removeEventListener('scroll', this.scrollEvent);
       }
-    },
-
-    ready() {
-      this.addEvent();
     },
 
     destroyed() {
