@@ -6,10 +6,8 @@ props
 
 ```JS
 props: {
-  // 回调函数 [必须返回 Promise]
-  method: {
-    type: Function
-  },
+  // 触发函数 [必须返回 Promise]
+  method: Function,
 
   // 起始值
   offset: {
@@ -21,6 +19,12 @@ props: {
   limit: {
     type: Number,
     default: 10
+  },
+
+  // 触发坐标
+  bottom: {
+    type: Number,
+    default: 100
   }
 }
 ```
@@ -44,10 +48,15 @@ new Vue({
   },
 
   data: () => ({
-    offset: 0,
     limit: 0,
     store: []
   }),
+
+  computed: {
+    offset() {
+      return this.store.length;
+    }
+  },
 
   methods: {
     getData() {
@@ -55,20 +64,17 @@ new Vue({
         .then(res => resPurify(res))
         .then(json => {
           this.store = this.store.concat(json);
-          this.offset += json.length;
         });
     }
   }
 });
 ```
+
 ```HTML
-<lazy :method="getData" :offset="offset" :limit="limit"></lazy>
+<lazy :method="getData" :offset="offset" :limit="limit" :bottom="100"></lazy>
 ```
 
-你需要做的只是：
-
-1. 将获取成功的数据写入 VM 中
-2. 正确的改写 `offset`
+你需要做的，仅仅是将获取的数据写入 VM 中。那些其它的事情，就交给 Lazy 来处理吧！
 
 > 回调函数只会在出现滚动条，且距离底部 100px  以下时才会触发。Lazy 在首次加载时不会启动。
 

@@ -16,10 +16,15 @@ new Vue({
 
   data: () => ({
     status: 1,
-    offset: 0,
     limit: 10,
     store: []
   }),
+
+  computed: {
+    offset() {
+      return this.store.length;
+    }
+  },
 
   methods: {
     getData() {
@@ -27,7 +32,6 @@ new Vue({
         .then(res => resPurify(res))
         .then(json => {
           this.store = this.store.concat(json);
-          this.offset += json.length;
         });
     },
 
@@ -48,7 +52,7 @@ new Vue({
     this.firstGetData();
 
     setTimeout(() => {
-      this.offset = 0;
+      this.store = [];
     }, 10000);
   }
 });
