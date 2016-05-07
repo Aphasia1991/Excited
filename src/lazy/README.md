@@ -1,37 +1,27 @@
 # Lazy
 
+## Intro
+
+Lazy 包含以下功能：
+
+- 触底加载
+- 处理异常
+- 智能锁定请求
+
 ## Usage
 
-props
+Lazy 接收以下 props 属性：
 
-```JS
-props: {
-  // 触发函数 [必须返回 Promise]
-  method: Function,
-
-  // 起始值
-  offset: {
-    type: Number,
-    default: 0
-  },
-
-  // 查询数
-  limit: {
-    type: Number,
-    default: 10
-  },
-
-  // 触发坐标
-  bottom: {
-    type: Number,
-    default: 100
-  }
-}
+```bash
+offset          # [Number]   当前页码
+limit           # [Number]   查询数，默认 0
+bottom          # [Number]   触发时距底边高度，默认 100
+method          # [Function] 回调函数：加载更多
 ```
 
-`method` 必须传入一个返回 `Promise` 的函数，你无需自己处理异常。
+`method` 中的回调函数必须返回一个 `Promise`，你**无需**使用 `catch` 处理异常。
 
-简单的例子：
+## Example
 
 ```JS
 const resPurify = (res) => {
@@ -74,8 +64,6 @@ new Vue({
 <lazy :method="getData" :offset="offset" :limit="limit" :bottom="100"></lazy>
 ```
 
-你需要做的，仅仅是将获取的数据写入 VM 中。那些其它的事情，就交给 Lazy 来处理吧！
-
-> 回调函数只会在出现滚动条，且距离底部 100px  以下时才会触发。Lazy 在首次加载时不会启动。
+使用 Lazy 后，你所要做的就只是将数据写入 VM 中。其它繁琐的事情，Lazy 都会帮你完成。
 
 [查看 Lazy 与 Load 如何配合使用](https://github.com/banricho/Element/issues/2)
