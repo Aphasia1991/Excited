@@ -20,7 +20,7 @@
       // 触发函数 [必须返回 Promise]
       method: Function,
 
-      // 起始值
+      // 当前页码
       offset: {
         type: Number,
         default: 0

@@ -15,7 +15,7 @@
 
     <div class="error-main"
          v-if="status === 2">
-      <img src="./assets/error.png"></img>
+      <img src="./assets/error.svg"></img>
       <h2>加载失败了</h2>
       <a @click="method">重新加载</a>
     </div>

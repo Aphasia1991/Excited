@@ -14,7 +14,7 @@ Lazy 接收以下 props 属性：
 
 ```bash
 offset          # [Number]   当前页码
-limit           # [Number]   查询数，默认 0
+limit           # [Number]   查询数，默认 10
 bottom          # [Number]   触发时距底边高度，默认 100
 method          # [Function] 回调函数：加载更多
 ```
@@ -38,7 +38,7 @@ new Vue({
   },
 
   data: () => ({
-    limit: 0,
+    limit: 10,
     store: []
   }),
 
@@ -64,6 +64,10 @@ new Vue({
 <lazy :method="getData" :offset="offset" :limit="limit" :bottom="100"></lazy>
 ```
 
-使用 Lazy 后，你所要做的就只是将数据写入 VM 中。其它繁琐的事情，Lazy 都会帮你完成。
+## Tips
+
+使用 Lazy 后，你所要做的就只是将数据写入 VM 中。其它繁琐的事情，Lazy 都会帮你完成。  
+
+由于首次加载一般会有更多的逻辑，所以 Lazy 会等待它完成后才绑定事件。你可以对例子中的 `getData()` 进一步包装，并在首次主动执行它。
 
 [查看 Lazy 与 Load 如何配合使用](https://github.com/banricho/Element/issues/2)
