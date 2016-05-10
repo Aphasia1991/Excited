@@ -1,6 +1,5 @@
-.wrap {
+.load-wrap {
   position: fixed;
-  z-index: 8888;
   top: 0;
   left: 0;
   display: flex;
@@ -12,12 +11,12 @@
   justify-content: center;
 }
 
-.wrap-transition {
+.load-transition {
   transition: opacity .3s;
   opacity: 1;
 }
 
-.wrap-leave {
+.load-leave {
   opacity: 0;
 }
 

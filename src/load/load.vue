@@ -1,8 +1,9 @@
 <template>
-  <div class="wrap"
+  <div class="load-wrap"
        v-show="status === 1 || status === 2"
+       :style="{ zIndex: zIndex }"
        @touchmove.stop.prevent="touch"
-       transition="wrap">
+       transition="load">
 
     <div class="loading-main"
          v-show="status === 1">
@@ -28,6 +29,10 @@
       status: {
         type: Number,
         default: 0 // 0 不显示，1 加载中，2 失败
+      },
+      zIndex: {
+        type: Number,
+        default: 8888
       },
       method: {
         type: Function,

@@ -6,6 +6,7 @@ Lazy 接收以下 props 属性：
 
 ```bash
 status          # [Number]   状态：0 隐藏，1 加载中，2 失败
+z-index         # [Number]   CSS z-index 属性，默认 8888
 method          # [Function] 回调函数：重新加载，默认刷新页面
 ```
 
