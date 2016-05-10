@@ -3,17 +3,16 @@
   top: 0;
   left: 0;
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   background-color: #fff;
-
-  align-items: center;
-  justify-content: center;
 }
 
 .load-transition {
-  transition: opacity .3s;
   opacity: 1;
+  transition: opacity .3s;
 }
 
 .load-leave {
@@ -21,10 +20,10 @@
 }
 
 .loading-main {
-  font-size: 50px;
   position: relative;
   width: 2em;
   height: 2em;
+  font-size: 50px;
 }
 
 .loading-icon-wrap,
@@ -39,8 +38,8 @@
 .loading-icon,
 .loading-bottom {
   background-image: url('./assets/loading.svg');
-  background-repeat: no-repeat;
   background-size: 420px 420px;
+  background-repeat: no-repeat;
 }
 
 /*
@@ -56,31 +55,24 @@
   100% {
     background-position: 50% 6.25%;
   }
-
   12.5% {
     background-position: 93.75% 6.25%;
   }
-
   25% {
     background-position: 6.25% 50%;
   }
-
   37.5% {
     background-position: 50% 50%;
   }
-
   50% {
     background-position: 93.75% 50%;
   }
-
   62.5% {
     background-position: 6.25% 93.75%;
   }
-
   75% {
     background-position: 50% 93.75%;
   }
-
   87.5% {
     background-position: 93.75% 93.75%;
   }
@@ -91,8 +83,8 @@
  */
 
 .loading-icon-wrap {
-  z-index: 10;
   bottom: 1em;
+  z-index: 10;
   animation: loading-icon-wrap-ani .7s ease-in-out infinite;
 }
 
@@ -112,8 +104,8 @@
 
 .loading-bottom {
   bottom: 0;
-  animation: loading-bottom-ani .7s ease-in-out infinite;
   background-position: 6.25% 6.25%;
+  animation: loading-bottom-ani .7s ease-in-out infinite;
 }
 
 @keyframes loading-bottom-ani {
@@ -129,31 +121,28 @@
 .error-main {
   display: flex;
   flex-direction: column;
-
   align-items: center;
+
   img {
     display: block;
-    width: 136px;
-    height: 195px;
+    width: 182px;
+    height: 224px;
   }
-
   h2 {
-    font-size: 34px;
-    font-weight: 400;
     margin: 33px 0;
     color: #666;
+    font-weight: 400;
+    font-size: 34px;
   }
-
   a {
-    font-size: 32px;
     display: flex;
-    width: 250px;
-    height: 80px;
-    color: #fff;
-    border-radius: 8px;
-    background: #56d176;
-
     align-items: center;
     justify-content: center;
+    width: 250px;
+    height: 80px;
+    border-radius: 8px;
+    background: #56d176;
+    color: #fff;
+    font-size: 32px;
   }
 }
