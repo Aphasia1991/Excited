@@ -94,7 +94,7 @@
         }
       },
 
-      scrollEvent() {
+      emitLazy() {
         // 有时浏览器不能及时移除事件
         if (this.status !== 0 || this.offset < this.limit) return;
 
@@ -103,11 +103,11 @@
       },
 
       addEvent() {
-        window.addEventListener('scroll', this.scrollEvent);
+        window.addEventListener('touchmove', this.emitLazy);
       },
 
       rmEvent() {
-        window.removeEventListener('scroll', this.scrollEvent);
+        window.removeEventListener('touchmove', this.emitLazy);
       }
     },
 
