@@ -89,7 +89,7 @@
       lazyLoad() {
         const doc = document.documentElement;
         const distance = doc.offsetHeight - doc.clientHeight - window.pageYOffset;
-        if (distance >= 0 && distance < this.bottom) {
+        if (distance < this.bottom) {
           this.load();
         }
       },

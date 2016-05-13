@@ -2,8 +2,8 @@
   <div class="load-wrap"
        v-show="status === 1 || status === 2"
        :style="{ zIndex: zIndex }"
-       @touchmove.stop.prevent="touch"
-       transition="load">
+       transition="load"
+       @touchmove.stop.prevent>
 
     <div class="loading-main"
          v-show="status === 1">
@@ -39,12 +39,6 @@
         default() {
           window.location.reload(true);
         }
-      }
-    },
-
-    methods: {
-      touch() {
-        return false;
       }
     }
   };
