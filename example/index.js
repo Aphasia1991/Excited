@@ -11,12 +11,14 @@ new Vue({
 
   components: {
     'load': require('../src/Load/load.vue'),
-    'lazy': require('../src/Lazy/lazy.vue')
+    'lazy': require('../src/Lazy/lazy.vue'),
+    'hourglass': require('../src/Hourglass/hourglass.vue')
   },
 
   data: () => ({
     status: 1,
     limit: 10,
+    countdown: 10,
     store: []
   }),
 
@@ -53,6 +55,7 @@ new Vue({
 
     setTimeout(() => {
       this.store = [];
+      // this.countdown = -999;
     }, 10000);
   }
 });
