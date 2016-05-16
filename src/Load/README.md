@@ -2,7 +2,7 @@
 
 ## Usage
 
-Load 接收以下 props 属性：
+Load 接收以下 `props` 属性：
 
 ```bash
 status          # [Number]   状态：0 隐藏，1 加载中，2 失败

@@ -10,7 +10,7 @@ Lazy 包含以下功能：
 
 ## Usage
 
-Lazy 接收以下 props 属性：
+Lazy 接收以下 `props` 属性：
 
 ```bash
 offset          # [Number]   当前页码
