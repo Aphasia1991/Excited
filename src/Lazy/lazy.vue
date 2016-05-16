@@ -1,7 +1,7 @@
 <template>
   <div class="lazy-wrap"
        v-show="status === 1 || status === 2"
-       @click="reloadHandle">
+       @click="reloadEvent">
 
     <span class="lazy-loading"
           v-show="status === 1">
@@ -92,12 +92,13 @@
         }
       },
 
-      reloadHandle() {
+      reloadEvent() {
         if (this.status !== 2) return;
+
         this.loadData();
       },
 
-      scrollHandle() {
+      scrollEvent() {
         // 有时浏览器不能及时移除事件
         if (this.status !== 0 || this.offset < this.limit) return;
 
@@ -106,11 +107,11 @@
       },
 
       addEvent() {
-        this.flagElement.addEventListener('scroll', this.scrollHandle);
+        this.flagElement.addEventListener('scroll', this.scrollEvent);
       },
 
       rmEvent() {
-        this.flagElement.removeEventListener('scroll', this.scrollHandle);
+        this.flagElement.removeEventListener('scroll', this.scrollEvent);
       },
 
       getScrollTop() {
@@ -125,9 +126,7 @@
         let lazyFlag = this.$el.parentNode;
 
         while (isScrollNode(lazyFlag)) {
-          if (isFlag(lazyFlag)) {
-            return lazyFlag;
-          }
+          if (isFlag(lazyFlag)) return lazyFlag;
 
           lazyFlag = lazyFlag.parentNode;
         }
