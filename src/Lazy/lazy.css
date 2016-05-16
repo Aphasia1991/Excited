@@ -1,4 +1,4 @@
-.wrap {
+.lazy-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,7 +7,7 @@
   font-size: 26px;
 }
 
-.loading {
+.lazy-loading {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,14 +17,14 @@
     width: 30px;
     height: 30px;
     transform-origin: 50% 50%;
-    animation: load-icon .7s linear infinite;
+    animation: lazy-icon .7s linear infinite;
   }
   span {
     margin-left: 15px;
   }
 }
 
-@keyframes load-icon {
+@keyframes lazy-icon {
   0% {
     transform: rotate(0);
   }

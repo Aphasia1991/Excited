@@ -3,42 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title>Demo</title>
-  <style>body { font-family: PingFangSC-Regular; }</style>
+  <style>
+    body { font-family: PingFangSC-Regular; }
+    .wrapper {
+      height: 500px;
+      overflow-y: scroll;
+    }
+  </style>
 </head>
 <body>
-  <br>A<br><br><br><br>
-  <br><br><br><br><br>
-  <br>B<br><br><br><br>
-  <br><br><br><br><br>
-  <br>C<br><br><br><br>
-  <br><br><br><br><br>
-  <br>D<br><br><br><br>
-  <br><br><br><br><br>
-  <br>E<br><br><br><br>
-  <br><br><br><br><br>
-  <br>F<br><br><br><br>
-  <br><br><br><br><br>
-  <br>G<br><br><br><br>
-  <br><br><br><br><br>
-  <br>H<br><br><br><br>
-  <br><br><br><br><br>
-  <br>I<br><br><br><br>
-  <br><br><br><br><br>
-  <br>J<br><br><br><br>
-  <br><br><br><br><br>
-  <br>K<br><br><br><br>
-  <br><br><br><br><br>
-  <br>L<br><br><br><br>
-  <br><br><br><br><br>
-  <br>M<br><br><br><br>
-  <br><br><br><br><br>
-  <br>N<br><br><br><br>
-  <br><br><br><br><br>
-  <br>O<br><br><br><br>
-  <br><br><br><br><br>
+  <div class="wrapper" lazy-flag>
+    <br>A<br><br><br><br>
+    <br><br><br><br><br>
+    <br>B<br><br><br><br>
+    <br><br><br><br><br>
+    <br>C<br><br><br><br>
+    <br><br><br><br><br>
+    <br>D<br><br><br><br>
+    <br><br><br><br><br>
+    <br>E<br><br><br><br>
+    <br><br><br><br><br>
+    <br>F<br><br><br><br>
+    <br><br><br><br><br>
+    <br>G<br><br><br><br>
+    <br><br><br><br><br>
+    <br>H<br><br><br><br>
+    <br><br><br><br><br>
+    <br>I<br><br><br><br>
+    <br><br><br><br><br>
+    <br>J<br><br><br><br>
+    <br><br><br><br><br>
+    <br>K<br><br><br><br>
+    <br><br><br><br><br>
+    <br>L<br><br><br><br>
+    <br><br><br><br><br>
+    <br>M<br><br><br><br>
+    <br><br><br><br><br>
+    <br>N<br><br><br><br>
+    <br><br><br><br><br>
+    <br>O<br><br><br><br>
+    <br><br><br><br><br>
+
+    <lazy :offset="offset" :limit="limit" :bottom="100" :method="getData"></lazy>
+  </div>
 
   <load :status="status" :z-index="888" :method="firstGetData"></load>
-  <lazy :offset="offset" :limit="limit" :bottom="100" :method="getData"></lazy>
 
   <script>if (!window.fetch) document.write('<script src="//fe-static.ele.me/github/uglifyjs!github/fetch/v0.11.0/fetch.js"><\/script>');</script>
   <script src="//github.elemecdn.com/amfe/lib-flexible/master/build/flexible.js"></script>

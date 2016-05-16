@@ -21,6 +21,19 @@ method          # [Function] 回调函数：加载更多
 
 `method` 中的回调函数必须返回一个 `Promise`，你**无需**使用 `catch` 处理异常。
 
+Lazy 默认对 `window` 对象绑定 `scroll` 事件，但你也可以给目标元素添加 `lazy-flag` 属性，来指定这一行为：
+
+```HTML
+<!-- 为 #wrap 元素绑定滚动事件 -->
+
+<div id="wrap" lazy-flag>
+  <ul>
+    <li></li>
+  </ul>
+  <lazy></lazy>
+</div>
+```
+
 ## Example
 
 ```JS
