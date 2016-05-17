@@ -68,13 +68,14 @@
         this.status = 1;
         this.method()
           .then(() => {
-            // 新增量少于请求，移除事件
-            if (this.offset - this.offsetTemp < this.limit) {
-              this.rmEvent();
-            }
-
             // 延迟 500 毫秒重置状态
             window.setTimeout(() => {
+              // 新增量少于请求，移除事件
+              if (this.offset - this.offsetTemp < this.limit) {
+                window.alert(this.offset - this.offsetTemp);
+                this.rmEvent();
+              }
+
               this.status = 0;
             }, 500);
           })
