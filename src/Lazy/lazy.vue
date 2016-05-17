@@ -44,7 +44,7 @@
 
       offsetTemp: 0, // 缓存页码
       scrollTimer: null, // 定时器
-      flagElement: null // 滚动元素
+      flagElement: window // 滚动元素
     }),
 
     watch: {
@@ -72,7 +72,6 @@
             window.setTimeout(() => {
               // 新增量少于请求，移除事件
               if (this.offset - this.offsetTemp < this.limit) {
-                window.alert(this.offset - this.offsetTemp);
                 this.rmEvent();
               }
 
