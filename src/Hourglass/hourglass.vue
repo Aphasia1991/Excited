@@ -40,9 +40,9 @@
         const hour = Math.floor(this.timer / 3600);
         const min = Math.floor(this.timer % 3600 / 60);
         const sec = this.timer % 60;
-        const formatTimer = num => num < 10 ? '0' + num : num;
+        const format = num => num < 10 ? '0' + num : num;
 
-        return [formatTimer(hour), formatTimer(min), formatTimer(sec)];
+        return [format(hour), format(min), format(sec)];
       }
     },
 
