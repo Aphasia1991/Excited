@@ -33,7 +33,7 @@
       method: {
         type: Function,
         default() {
-          window.location.reload(true);
+          location.reload(true);
         }
       }
     }

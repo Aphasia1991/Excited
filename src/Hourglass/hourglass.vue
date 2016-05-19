@@ -48,7 +48,7 @@
 
     methods: {
       clearInter() {
-        window.clearInterval(this.interval);
+        clearInterval(this.interval);
       },
 
       setTimer() {
@@ -56,7 +56,7 @@
 
         this.timer = this.countdown;
 
-        this.interval = window.setInterval(() => {
+        this.interval = setInterval(() => {
           if (this.timer > 1) {
             this.timer -= 1;
           } else {

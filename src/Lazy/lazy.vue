@@ -69,7 +69,7 @@
         this.method()
           .then(() => {
             // 延迟 500 毫秒重置状态
-            window.setTimeout(() => {
+            setTimeout(() => {
               // 新增量少于请求，移除事件
               if (this.offset - this.offsetTemp < this.limit) {
                 this.rmEvent();
@@ -102,8 +102,8 @@
         // 有时浏览器不能及时移除事件
         if (this.status !== 0 || this.offset < this.limit) return;
 
-        window.clearTimeout(this.scrollTimer);
-        this.scrollTimer = window.setTimeout(this.lazyLoadData, 100);
+        clearTimeout(this.scrollTimer);
+        this.scrollTimer = setTimeout(this.lazyLoadData, 100);
       },
 
       addEvent() {
