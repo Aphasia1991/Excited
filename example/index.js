@@ -51,11 +51,11 @@ new Vue({
   },
 
   ready() {
-    this.firstGetData();
-
-    setTimeout(() => {
-      this.store = [];
-      // this.countdown = -999;
-    }, 10000);
+    // this.firstGetData();
+    //
+    // setTimeout(() => {
+    //   this.store = [];
+    //   // this.countdown = -999;
+    // }, 10000);
   }
 });
