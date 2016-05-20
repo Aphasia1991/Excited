@@ -3,8 +3,7 @@
        v-show="status === 1 || status === 2"
        @click="reloadEvent">
 
-    <span class="lazy-loading"
-          v-show="status === 1">
+    <span class="lazy-loading" v-show="status === 1">
       <img src="./assets/load.svg">
       <span>正在加载...</span>
     </span>
@@ -35,7 +34,7 @@
       // 触发坐标
       bottom: {
         type: Number,
-        default: 100
+        default: 200
       }
     },
 
@@ -115,9 +114,7 @@
       },
 
       getScrollTop() {
-        return this.flagElement === window
-          ? Math.max(window.pageYOffset || 0, document.documentElement.scrollTop)
-          : this.flagElement.scrollTop;
+        return this.flagElement === window ? window.pageYOffset : this.flagElement.scrollTop;
       },
 
       getLazyFlag() {

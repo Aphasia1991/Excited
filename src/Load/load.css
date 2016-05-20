@@ -64,8 +64,8 @@
 
   img {
     display: block;
-    width: 182px;
-    height: 224px;
+    width: 180px;
+    height: auto;
   }
   h2 {
     margin: 33px 0;
