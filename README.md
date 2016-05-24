@@ -1,6 +1,8 @@
 # Element
 
-面向业务的移动端组件。
+面向业务的移动端组件。  
+
+支持 Vue 2 的版本：https://github.com/banricho/Horizon
 
 ## Intro
 
