@@ -26,10 +26,12 @@
         type: Number,
         default: 0 // 0 不显示，1 加载中，2 失败
       },
+
       zIndex: {
         type: Number,
         default: 8888
       },
+
       method: {
         type: Function,
         default() {

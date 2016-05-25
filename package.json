@@ -1,8 +1,8 @@
 {
   "name": "element",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "eleme web components.",
-  "main": "./src/index.js",
+  "main": "",
   "scripts": {
     "build": "webpack -p",
     "dev": "webpack-dev-server --config ./webpack.example.config.js --inline --hot",
