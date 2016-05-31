@@ -50,7 +50,10 @@
 
   <load :status="status" :z-index="888" :method="firstGetData"></load>
 
-  <script>if (!window.fetch) document.write('<script src="//fe-static.ele.me/github/uglifyjs!github/fetch/v0.11.0/fetch.js"><\/script>');</script>
+  <script>
+    if (!window.Promise) document.write('<script src="//github.elemecdn.com/stefanpenner/es6-promise/v3.2.2/dist/es6-promise.min.js"><\/script>');
+    if (!window.fetch) document.write('<script src="//github.elemecdn.com/uglifyjs!github/fetch/v0.11.1/fetch.js"><\/script>');
+  </script>
   <script src="//github.elemecdn.com/amfe/lib-flexible/master/build/flexible.js"></script>
   <script src="//github.elemecdn.com/vuejs/vue/v1.0.21/dist/vue.js"></script>
   <script src="/build.js"></script>
