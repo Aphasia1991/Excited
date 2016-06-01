@@ -37,11 +37,12 @@ Lazy 默认对 `window` 对象绑定 `scroll` 事件，但你也可以给目标�
 ## Example
 
 ```JS
-const resPurify = (res) => {
-  const json = res.json();
-  if (res.status >= 200 && res.status < 300) return json;
-  return json.then(Promise.reject.bind(Promise));
-};
+const $fetch = url => fetch(url)
+  .then(res => {
+    const json = res.json();
+    if (res.status >= 200 && res.status < 300) return json;
+    return json.then(Promise.reject.bind(Promise));
+  });
 
 new Vue({
   el: 'body',
@@ -63,8 +64,7 @@ new Vue({
 
   methods: {
     getData() {
-      return fetch('./data.json')
-        .then(res => resPurify(res))
+      return $fetch('./data.json')
         .then(json => {
           this.store = this.store.concat(json);
         });

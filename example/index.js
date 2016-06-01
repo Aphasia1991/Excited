@@ -1,10 +1,11 @@
 Vue.config.debug = true;
 
-const resPurify = (res) => {
-  const json = res.json();
-  if (res.status >= 200 && res.status < 300) return json;
-  return json.then(Promise.reject.bind(Promise));
-};
+const $fetch = url => fetch(url)
+  .then(res => {
+    const json = res.json();
+    if (res.status >= 200 && res.status < 300) return json;
+    return json.then(Promise.reject.bind(Promise));
+  });
 
 new Vue({
   el: 'body',
@@ -30,8 +31,7 @@ new Vue({
 
   methods: {
     getData() {
-      return fetch('./data.json')
-        .then(res => resPurify(res))
+      return $fetch('./data.json')
         .then(json => {
           this.store = this.store.concat(json);
         });
@@ -39,7 +39,7 @@ new Vue({
 
     firstGetData() {
       this.status = 1;
-      // 
+
       // this.getData()
       //   .then(() => {
       //     this.status = 0;
@@ -55,7 +55,7 @@ new Vue({
 
     setTimeout(() => {
       this.store = [];
-      // this.countdown = -999;
+    // this.countdown = -999;
     }, 10000);
   }
 });
