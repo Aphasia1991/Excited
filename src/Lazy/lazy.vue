@@ -48,12 +48,12 @@
 
     watch: {
       offset(newVal) {
-        // 当页码增幅达到请求数时，绑定事件
+        // 当新页码达到请求数时，绑定事件
         if (newVal === this.limit) {
           this.addEvent();
         }
 
-        // 当页码增幅小于请求数时，移除事件
+        // 当新页码小于请求数时，移除事件
         if (newVal < this.limit) {
           this.rmEvent();
         }
@@ -134,6 +134,11 @@
 
     ready() {
       this.flagElement = this.getLazyFlag();
+
+      // 启动时有足够数据，直接绑定
+      if (this.offset === this.limit) {
+        this.addEvent();
+      }
     },
 
     destroyed() {

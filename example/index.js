@@ -40,13 +40,13 @@ new Vue({
     firstGetData() {
       this.status = 1;
 
-      // this.getData()
-      //   .then(() => {
-      //     this.status = 0;
-      //   })
-      //   .catch(() => {
-      //     this.status = 2;
-      //   });
+      this.getData()
+        .then(() => {
+          this.status = 0;
+        })
+        .catch(() => {
+          this.status = 2;
+        });
     }
   },
 
