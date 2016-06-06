@@ -1,8 +1,10 @@
 <template>
   <div>
-    <span>{{hourglass[0]}}</span>
-    <span>{{hourglass[1]}}</span>
-    <span>{{hourglass[2]}}</span>
+    <span v-if="onlyDay">{{ sundial }}</span>
+
+    <span v-if="!onlyDay">{{ hourglass[0] }}</span>
+    <span v-if="!onlyDay">{{ hourglass[1] }}</span>
+    <span v-if="!onlyDay">{{ hourglass[2] }}</span>
   </div>
 </template>
 
@@ -12,6 +14,12 @@
       countdown: {
         type: Number,
         default: 0
+      },
+
+      // 只显示天数
+      onlyDay: {
+        type: Boolean,
+        default: false
       },
 
       method: {
@@ -36,7 +44,14 @@
     }),
 
     computed: {
+      sundial() {
+        if (!this.onlyDay) return;
+        return Math.ceil(this.timer / 86400);
+      },
+
       hourglass() {
+        if (this.onlyDay) return;
+
         const hour = Math.floor(this.timer / 3600);
         const min = Math.floor(this.timer % 3600 / 60);
         const sec = this.timer % 60;
