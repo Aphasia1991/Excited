@@ -1,10 +1,9 @@
 <template>
   <div>
-    <span v-if="onlyDay">{{ sundial }}</span>
-
-    <span v-if="!onlyDay">{{ hourglass[0] }}</span>
-    <span v-if="!onlyDay">{{ hourglass[1] }}</span>
-    <span v-if="!onlyDay">{{ hourglass[2] }}</span>
+    <span v-if="start === 0" v-text="day"></span>
+    <span v-if="start <= 1 && end >= 1" v-text="hour"></span>
+    <span v-if="start <= 2 && end >= 2" v-text="min"></span>
+    <span v-if="end === 3" v-text="sec"></span>
   </div>
 </template>
 
@@ -16,10 +15,19 @@
         default: 0
       },
 
-      // 只显示天数
-      onlyDay: {
+      start: {
+        type: Number,
+        default: 1
+      },
+
+      end: {
+        type: Number,
+        default: 3
+      },
+
+      fill: {
         type: Boolean,
-        default: false
+        default: true
       },
 
       method: {
@@ -44,24 +52,39 @@
     }),
 
     computed: {
-      sundial() {
-        if (!this.onlyDay) return;
-        return Math.ceil(this.timer / 86400);
+      day() {
+        return this.getNumber(0, 31536000, 86400);
       },
 
-      hourglass() {
-        if (this.onlyDay) return;
+      hour() {
+        return this.getNumber(1, 86400, 3600);
+      },
 
-        const hour = Math.floor(this.timer / 3600);
-        const min = Math.floor(this.timer % 3600 / 60);
-        const sec = this.timer % 60;
-        const format = num => num < 10 ? '0' + num : num;
+      min() {
+        return this.getNumber(2, 3600, 60);
+      },
 
-        return [format(hour), format(min), format(sec)];
+      sec() {
+        return this.getNumber(3, 60, 1);
       }
     },
 
     methods: {
+      formatNum(num) {
+        if (!this.fill) return num;
+
+        return num < 10 ? '0' + num : num;
+      },
+
+      getNumber(index, parentNum, selfNum) {
+        const mathFn = this.end === index ? 'ceil' : 'floor';
+        const baseNum = this.start < index
+          ? this.timer % parentNum / selfNum
+          : this.timer / selfNum;
+
+        return this.formatNum(Math[mathFn](baseNum));
+      },
+
       clearInter() {
         clearInterval(this.interval);
       },
@@ -73,7 +96,7 @@
 
         this.interval = setInterval(() => {
           if (this.timer > 1) {
-            this.timer -= 1;
+            this.timer--;
           } else {
             this.triggerMethod();
           }
