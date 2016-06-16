@@ -1,12 +1,3 @@
-<template>
-  <div>
-    <span v-if="start === 0" v-text="day"></span>
-    <span v-if="start <= 1 && end >= 1" v-text="hour"></span>
-    <span v-if="start <= 2 && end >= 2" v-text="min"></span>
-    <span v-if="end === 3" v-text="sec"></span>
-  </div>
-</template>
-
 <script>
   export default {
     props: {
@@ -37,12 +28,8 @@
     },
 
     watch: {
-      countdown(newVal) {
-        if (newVal > 0) {
-          this.setTimer();
-        } else {
-          this.triggerMethod();
-        }
+      countdown() {
+        this.init();
       }
     },
 
@@ -85,35 +72,41 @@
         return this.formatNum(Math[mathFn](baseNum));
       },
 
-      clearInter() {
-        clearInterval(this.interval);
-      },
-
-      setTimer() {
-        this.clearInter();
-
-        this.timer = this.countdown;
-
-        this.interval = setInterval(() => {
-          if (this.timer > 1) {
-            this.timer--;
-          } else {
-            this.triggerMethod();
-          }
-        }, 1000);
-      },
-
       triggerMethod() {
-        this.clearInter();
+        clearInterval(this.interval);
         this.timer = 0;
         this.method();
+      },
+
+      init() {
+        // Fix prop type check
+        if (typeof this.countdown !== 'number' || this.countdown < 0) return;
+
+        clearInterval(this.interval);
+        this.timer = this.countdown;
+
+        if (this.timer === 0) return this.triggerMethod();
+
+        const hourglass = () => {
+          this.timer--;
+          if (this.timer === 0) return this.triggerMethod();
+        };
+
+        this.interval = setInterval(hourglass, 1000);
       }
     },
 
     ready() {
-      if (this.countdown > 0) {
-        this.setTimer();
-      }
+      this.init();
     }
   };
 </script>
+
+<template>
+  <div>
+    <span v-if="start === 0" v-text="day"></span>
+    <span v-if="start <= 1 && end >= 1" v-text="hour"></span>
+    <span v-if="start <= 2 && end >= 2" v-text="min"></span>
+    <span v-if="end === 3" v-text="sec"></span>
+  </div>
+</template>

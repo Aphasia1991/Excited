@@ -1,18 +1,3 @@
-<template>
-  <div class="lazy-wrap"
-       v-show="status === 1 || status === 2"
-       @click="reloadEvent">
-
-    <span class="lazy-loading" v-show="status === 1">
-      <img src="./assets/load.svg">
-      <span>正在加载...</span>
-    </span>
-
-    <span v-show="status === 2">加载失败，点此重新加载</span>
-
-  </div>
-</template>
-
 <script>
   export default {
     props: {
@@ -146,5 +131,20 @@
     }
   };
 </script>
+
+<template>
+  <div class="lazy-wrap"
+       v-show="status === 1 || status === 2"
+       @click="reloadEvent">
+
+    <span class="lazy-loading" v-show="status === 1">
+      <img src="./assets/load.svg">
+      <span>正在加载...</span>
+    </span>
+
+    <span v-show="status === 2">加载失败，点此重新加载</span>
+
+  </div>
+</template>
 
 <style src="./lazy.css" scoped></style>

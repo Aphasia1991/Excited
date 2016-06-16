@@ -19,7 +19,7 @@ new Vue({
   data: () => ({
     status: 1,
     limit: 10,
-    countdown: null,
+    countdown: 10,
     store: []
   }),
 
@@ -59,7 +59,7 @@ new Vue({
 
     setTimeout(() => {
       this.store = [];
-      this.countdown = 0;
+      this.countdown = -9999;
     }, 5000);
   }
 });
