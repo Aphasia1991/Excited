@@ -22,7 +22,7 @@ new Vue({
     limit: 10,
     countdown: 10,
     store: [],
-    sharePage: 'about: blank'
+    sharePage: ''
   }),
 
   computed: {

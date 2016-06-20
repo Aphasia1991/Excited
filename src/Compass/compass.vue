@@ -24,6 +24,11 @@
         default: ''
       },
 
+      display: {
+        type: Boolean,
+        default: true
+      },
+
       method: {
         type: Function,
         default() {}
@@ -57,6 +62,7 @@
 
     methods: {
       getLocName() {
+        if (!this.display) return;
         $fetch(this.apihost + '/v2/pois/' + this.geohash)
           .then(json => {
             this.locName = json.name;
@@ -116,7 +122,7 @@
 </script>
 
 <template>
-  <div class="compass-wrap" @click="loopTryHybrid">
+  <div class="compass-wrap" v-if="display" @click="loopTryHybrid">
     <svg class="compass-location" v-if="geohash"
       viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M32.15.304C18.47.304 7.337 11.478 7.337 25.212c0 18.856 22.126 37.26 23.067 38.034a2.743 2.743 0 0 0 3.492 0c.943-.773 23.067-19.178 23.067-38.034C56.963 11.478 45.833.304 32.15.304zm0 31.066c-5.086 0-9.21-4.112-9.21-9.185S27.064 13 32.15 13c5.088 0 9.212 4.112 9.212 9.185s-4.124 9.185-9.21 9.185h-.002z" fill-rule="evenodd"/></svg>
     <svg class="compass-refresh" :class="[ isTrying ? 'compass-loading': '' ]" v-else
