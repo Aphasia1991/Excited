@@ -13,14 +13,16 @@ new Vue({
   components: {
     'load': require('../src/Load/load.vue'),
     'lazy': require('../src/Lazy/lazy.vue'),
-    'hourglass': require('../src/Hourglass/hourglass.vue')
+    'hourglass': require('../src/Hourglass/hourglass.vue'),
+    'compass': require('../src/Compass/compass.vue')
   },
 
   data: () => ({
     status: 1,
     limit: 10,
     countdown: 10,
-    store: []
+    store: [],
+    sharePage: 'about: blank'
   }),
 
   computed: {
@@ -51,6 +53,10 @@ new Vue({
 
     timeUp() {
       console.log('Time Up!');
+    },
+
+    initStage(val) {
+      console.log(val);
     }
   },
 

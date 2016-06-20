@@ -1,0 +1,43 @@
+.compass-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+
+  svg {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.compass-location {
+  margin-right: 8px;
+}
+
+.compass-refresh {
+  position: absolute;
+  top: 20px;
+  right: 150px;
+}
+
+.compass-name,
+.compass-tips {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.compass-loading {
+  transform-origin: 50% 50%;
+  animation: compass-rotation 1s linear infinite;
+}
+
+@keyframes compass-rotation {
+  to {
+    transform: rotate(360deg);
+  }
+}
