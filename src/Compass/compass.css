@@ -20,8 +20,9 @@
 
 .compass-refresh {
   position: absolute;
-  top: 20px;
+  top: 50%;
   right: 150px;
+  transform: translateY(-50%) rotate(0);
 }
 
 .compass-name,
@@ -38,6 +39,6 @@
 
 @keyframes compass-rotation {
   to {
-    transform: rotate(360deg);
+    transform: translateY(-50%) rotate(360deg);
   }
 }

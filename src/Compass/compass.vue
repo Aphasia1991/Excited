@@ -19,17 +19,26 @@
         default: '//m.ele.me/restapi'
       },
 
-      redirect: {
-        type: String,
-        default: ''
-      },
-
       display: {
         type: Boolean,
         default: true
       },
 
-      method: {
+      tips: {
+        type: Object,
+        default: () => ({
+          loading: '正在定位，请稍后...',
+          failed: '定位失败，无法加载分会场',
+          fallback: '您附近的餐厅'
+        })
+      },
+
+      reslove: {
+        type: Function,
+        default() {}
+      },
+
+      reject: {
         type: Function,
         default() {}
       }
@@ -46,7 +55,7 @@
 
     computed: {
       locTips() {
-        return this.isTrying ? '正在定位，请稍后...' : '定位失败，无法加载分会场';
+        return this.isTrying ? this.tips.loading : this.tips.failed;
       }
     },
 
@@ -55,7 +64,7 @@
         if (!val) return;
         clearTimeout(this.isTrying);
 
-        this.method(val);
+        this.reslove(val);
         this.getLocName();
       }
     },
@@ -68,7 +77,7 @@
             this.locName = json.name;
           })
           .catch(() => {
-            this.locName = '您附近的餐厅';
+            this.locName = this.tips.fallback;
           });
       },
 
@@ -105,18 +114,18 @@
 
         if (this.geohash) return;
         if (this.apiHash) return this.geohash = this.apiHash;
+
+        this.reject();
       }
     },
 
-    ready() {
-      const param = new UParams();
-      const isApp = /Eleme/i.test(navigator.userAgent);
+    events: {
+      initCompass(geohash) {
+        if (geohash) return this.geohash = geohash;
 
-      if (param.geohash) return this.geohash = param.geohash;
-      if (!param.debug && !isApp && this.redirect) return location.href = this.redirect;
-
-      this.getHybridHash();
-      this.loopTryHybrid();
+        this.getHybridHash();
+        this.loopTryHybrid();
+      }
     }
   };
 </script>
