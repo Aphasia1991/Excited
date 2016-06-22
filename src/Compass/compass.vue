@@ -163,6 +163,7 @@
 
       // 选择模式
       getUserLoc() {
+        if (this.geohash) return;
         if (/Eleme/i.test(navigator.userAgent)) return this.useAppMode();
         this.useExternalMode();
       }
