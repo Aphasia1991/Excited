@@ -1,5 +1,5 @@
 <script>
-  // fetch API wrapper
+  // 包装 fetch API
   const $fetch = (url) => fetch(url)
     .then(res => {
       const json = res.json();
@@ -61,6 +61,7 @@
     },
 
     watch: {
+      // 一旦获取到 geohash，清空计时器，执行 resolve，获取地址名
       geohash(val) {
         if (!val) return;
         clearTimeout(this.isTrying);
@@ -71,6 +72,7 @@
     },
 
     methods: {
+      // 获取地址名称
       getLocName() {
         if (!this.show) return;
 
@@ -83,6 +85,7 @@
           });
       },
 
+      // 获取 restAPI 地址
       getApiHash() {
         if (this.apiLock) return;
         this.apiLock = true;
@@ -96,6 +99,7 @@
           });
       },
 
+      // 获取浏览器地址
       getNavigatorHash() {
         if (!navigator.geolocation || this.navHash) return;
 
@@ -104,22 +108,15 @@
         });
       },
 
+      // 获取 App 地址
       getHybridHash() {
         hybridAPI.getGlobalGeohash(geohash => {
           this.geohash = geohash;
         });
       },
 
-      loopTryHybrid() {
-        if (this.geohash || this.isTrying) return;
-
-        this.getNavigatorHash();
-        this.getApiHash();
-        this.isTrying = setInterval(this.getHybridHash, 500);
-        setTimeout(this.stopLoopTry, this.timeout);
-      },
-
-      stopLoopTry() {
+      // 选择最佳结果：Hybrid API > Navigator > restAPI
+      selectBestLoc() {
         clearTimeout(this.isTrying);
         this.isTrying = null;
 
@@ -128,22 +125,60 @@
         if (this.apiHash) return this.geohash = this.apiHash;
 
         this.reject();
+      },
+
+      // 每隔 500 毫秒请求一次 Hybrid API 数据
+      // Hybird API 有坑，回调函数必然执行，但未取得时参数为空
+      loopTryHybrid() {
+        if (this.geohash || this.isTrying) return;
+
+        this.isTrying = setInterval(this.getHybridHash, 500);
+        setTimeout(this.selectBestLoc, this.timeout);
+      },
+
+      // App 内部取地址模式
+      useAppMode() {
+        const fallback = () => {
+          if (this.geohash) return;
+          this.getNavigatorHash();
+          this.getApiHash();
+        };
+
+        this.getHybridHash();
+        this.loopTryHybrid();
+
+        setTimeout(fallback, this.timeout / 2);
+      },
+
+      // 外部取地址模式
+      useExternalMode() {
+        this.isTrying = setTimeout(this.selectBestLoc, this.timeout);
+
+        this.getNavigatorHash();
+        this.getApiHash();
+        this.$watch('navHash', val => {
+          this.geohash = val;
+        });
+      },
+
+      // 选择模式
+      getUserLoc() {
+        if (/Eleme/i.test(navigator.userAgent)) return this.useAppMode();
+        this.useExternalMode();
       }
     },
 
     events: {
       initCompass(geohash) {
         if (geohash) return this.geohash = geohash;
-
-        this.getHybridHash();
-        this.loopTryHybrid();
+        this.getUserLoc();
       }
     }
   };
 </script>
 
 <template>
-  <div class="compass-wrap" v-show="show" @click="loopTryHybrid">
+  <div class="compass-wrap" v-show="show" @click="getUserLoc">
     <svg class="compass-location" v-if="geohash"
       viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M32.15.304C18.47.304 7.337 11.478 7.337 25.212c0 18.856 22.126 37.26 23.067 38.034a2.743 2.743 0 0 0 3.492 0c.943-.773 23.067-19.178 23.067-38.034C56.963 11.478 45.833.304 32.15.304zm0 31.066c-5.086 0-9.21-4.112-9.21-9.185S27.064 13 32.15 13c5.088 0 9.212 4.112 9.212 9.185s-4.124 9.185-9.21 9.185h-.002z" fill-rule="evenodd"/></svg>
     <svg class="compass-refresh" :class="[ isTrying ? 'compass-loading': '' ]" v-else
