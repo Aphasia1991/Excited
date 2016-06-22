@@ -48,6 +48,7 @@
       geohash: '',
       locName: '',
 
+      navHash: '',
       apiHash: '',
       apiLock: false,
       isTrying: null // interval ID
@@ -94,6 +95,14 @@
           });
       },
 
+      getNavigatorHash() {
+        if (!navigator.geolocation || this.navHash) return;
+
+        navigator.geolocation.getCurrentPosition(position => {
+          this.navHash = Geohash.encode(position.coords.latitude, position.coords.longitude);
+        });
+      },
+
       getHybridHash() {
         hybridAPI.getGlobalGeohash(geohash => {
           this.geohash = geohash;
@@ -103,6 +112,7 @@
       loopTryHybrid() {
         if (this.geohash || this.isTrying) return;
 
+        this.getNavigatorHash();
         this.getApiHash();
         this.isTrying = setInterval(this.getHybridHash, 500);
         setTimeout(this.stopLoopTry, this.timeout);
@@ -113,6 +123,7 @@
         this.isTrying = null;
 
         if (this.geohash) return;
+        if (this.navHash) return this.geohash = this.navHash;
         if (this.apiHash) return this.geohash = this.apiHash;
 
         this.reject();
