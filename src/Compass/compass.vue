@@ -28,7 +28,7 @@
         type: Object,
         default: () => ({
           loading: '正在定位，请稍后...',
-          failed: '定位失败，无法加载分会场',
+          failed: '定位失败，点此重新定位',
           fallback: '您附近的餐厅'
         })
       },
@@ -154,4 +154,4 @@
   </div>
 </template>
 
-<style src="./compass.css" scoped></style>
+<style src="./compass.css"></style>
