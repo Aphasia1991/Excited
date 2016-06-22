@@ -21,8 +21,7 @@ new Vue({
     status: 1,
     limit: 10,
     countdown: 10,
-    store: [],
-    sharePage: ''
+    store: []
   }),
 
   computed: {
