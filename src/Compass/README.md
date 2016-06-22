@@ -23,7 +23,7 @@ reject        # [Function] 超出 timeout 设置的时间依旧未执行
 
 Compass 使用了自定义事件，在内部提供了初始化的 `initCompass` 方法。它接收一个参数 `geohash`，当代入 `geohash` 时初始化，将直接用此 `geohash` 请求地址名并执行 `reslove` 方法。当没有代入 `geohash` 时，将使用内部的逻辑获取 `geohash`。
 
-## tips
+## Tips
 
 取地址规则：
 
