@@ -33,7 +33,7 @@
         })
       },
 
-      reslove: {
+      resolve: {
         type: Function,
         default() {}
       },
@@ -65,7 +65,7 @@
         if (!val) return;
         clearTimeout(this.isTrying);
 
-        this.reslove(val);
+        this.resolve(val);
         this.getLocName();
       }
     },
