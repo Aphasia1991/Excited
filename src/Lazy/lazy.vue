@@ -45,14 +45,6 @@
       }
     },
 
-    events: {
-      initLazy() {
-        if (this.offset !== 0) return;
-
-        this.loadData();
-      }
-    },
-
     methods: {
       loadData() {
         // 请求前同步页码
@@ -122,6 +114,14 @@
         }
 
         return window;
+      }
+    },
+
+    events: {
+      initLazy() {
+        if (this.offset !== 0) return;
+
+        this.loadData();
       }
     },
 
