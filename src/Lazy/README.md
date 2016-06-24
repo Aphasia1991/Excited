@@ -81,6 +81,6 @@ new Vue({
 
 使用 Lazy 后，你所要做的就只是将数据写入 VM 中。其它繁琐的事情，Lazy 都会帮你完成。  
 
-由于首次加载一般会有更多的逻辑，所以 Lazy 会等待它完成后才绑定事件。你可以对例子中的 `getData()` 进一步包装，并在首次主动执行它。
+由于首次加载一般会有更多的逻辑，所以 Lazy 会等待它完成后才绑定事件。你可以对例子中的 `getData()` 进一步包装，并在首次主动执行它。比如：[查看 Lazy 与 Load 如何配合使用](https://github.com/banricho/Element/issues/2)
 
-[查看 Lazy 与 Load 如何配合使用](https://github.com/banricho/Element/issues/2)
+如果你的首次加载没有更多逻辑，并且也希望使用 Lazy 自带的动画，那么你可以使用自定义事件 `initLazy` 来触发 Lazy 的首次执行。值得注意的是，`initLazy` 事件仅可在 `offset` 为 `0` 时被执行一次，因为后续的行为都应该交给 Lazy 自动处理。

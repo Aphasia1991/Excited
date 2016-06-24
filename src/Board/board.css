@@ -1,0 +1,32 @@
+.board-wrap {
+  margin: 1em 0;
+
+  h3, span, ul, li {
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    line-height: 1.5em;
+  }
+  ul {
+    list-style: none;
+  }
+  h3 {
+    font-weight: 700;
+
+    &::after {
+      content: '：'
+    }
+  }
+}
+
+.board-line {
+  h3 {
+    display: inline;
+  }
+}
+
+.board-list {
+  h3, li {
+    margin: .5em 0;
+  }
+}

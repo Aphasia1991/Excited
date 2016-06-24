@@ -14,14 +14,22 @@ new Vue({
     'load': require('../src/Load/load.vue'),
     'lazy': require('../src/Lazy/lazy.vue'),
     'hourglass': require('../src/Hourglass/hourglass.vue'),
-    'compass': require('../src/Compass/compass.vue')
+    'compass': require('../src/Compass/compass.vue'),
+    'board': require('../src/Board/board.vue')
   },
 
   data: () => ({
     status: 1,
     limit: 10,
     countdown: 10,
-    store: []
+    store: [],
+    boards: [{
+      title: '活动时间',
+      content: '2016年1月1日-2017年1月1日'
+    }, {
+      title: '活动规则',
+      content: ['这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊', '这是什么这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊这是什么东西啊什么东西啊']
+    }]
   }),
 
   computed: {
@@ -60,7 +68,8 @@ new Vue({
   },
 
   ready() {
-    this.firstGetData();
+    // this.firstGetData();
+    this.$broadcast('initLazy');
 
     setTimeout(() => {
       this.store = [];

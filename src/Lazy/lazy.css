@@ -17,7 +17,7 @@
     width: 30px;
     height: 30px;
     transform-origin: 50% 50%;
-    animation: lazy-icon .7s linear infinite;
+    animation: lazy-icon 1s linear infinite;
   }
   span {
     margin-left: 15px;

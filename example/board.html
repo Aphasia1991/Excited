@@ -8,12 +8,12 @@
   </style>
 </head>
 <body>
-  <hourglass
-    :countdown="countdown"
-    :start="3"
-    :end="3"
-    :fill="true"
-    :method="timeUp"></hourglass>
+  <div>
+    <board
+      v-for="board in boards"
+      :title="board.title"
+      :content="board.content"></board>
+  </div>
 
   <script src="//github.elemecdn.com/amfe/lib-flexible/master/build/flexible.js"></script>
   <script src="//github.elemecdn.com/vuejs/vue/v1.0.24/dist/vue.js"></script>
