@@ -34,14 +34,10 @@
     watch: {
       offset(newVal) {
         // 当新页码达到请求数时，绑定事件
-        if (newVal === this.limit) {
-          this.addEvent();
-        }
+        if (newVal === this.limit) return this.addEvent();
 
         // 当新页码小于请求数时，移除事件
-        if (newVal < this.limit) {
-          this.rmEvent();
-        }
+        if (newVal < this.limit) return this.rmEvent();
       }
     },
 
@@ -71,14 +67,11 @@
         const element = this.flagElement === window ? document.documentElement : this.flagElement;
         const distance = element.offsetHeight - element.clientHeight - this.getScrollTop();
 
-        if (distance < this.bottom) {
-          this.loadData();
-        }
+        if (distance < this.bottom) return this.loadData();
       },
 
       reloadEvent() {
         if (this.status !== 2) return;
-
         this.loadData();
       },
 
@@ -109,7 +102,6 @@
 
         while (isScrollNode(lazyFlag)) {
           if (isFlag(lazyFlag)) return lazyFlag;
-
           lazyFlag = lazyFlag.parentNode;
         }
 
@@ -120,7 +112,6 @@
     events: {
       initLazy() {
         if (this.offset !== 0) return;
-
         this.loadData();
       }
     },
@@ -129,9 +120,7 @@
       this.flagElement = this.getLazyFlag();
 
       // 启动时有足够数据，直接绑定
-      if (this.offset === this.limit) {
-        this.addEvent();
-      }
+      if (this.offset === this.limit) return this.addEvent();
     },
 
     destroyed() {
