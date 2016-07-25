@@ -15,8 +15,9 @@ Lazy 接收以下 `props` 属性：
 ```bash
 offset          # [Number]   当前页码
 limit           # [Number]   查询数，默认 10
-bottom          # [Number]   触发时距底边高度，默认 200
+bottom          # [Number]   触发时距底边高度，默认 300
 method          # [Function] 回调函数：加载更多
+tips            # [Object { loading, error, done }] 提示文字
 ```
 
 `method` 中的回调函数必须返回一个 `Promise`，你**无需**使用 `catch` 处理异常。

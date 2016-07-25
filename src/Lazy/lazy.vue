@@ -19,24 +19,40 @@
       // 触发坐标
       bottom: {
         type: Number,
-        default: 200
+        default: 300
+      },
+
+      tips: {
+        type: Object,
+        default: () => ({
+          'waiting': '',
+          'loading': '正在加载...',
+          'error': '加载失败，点此重新加载',
+          'done': '没有更多了哦~'
+        })
       }
     },
 
     data: () => ({
-      status: 0, // 0 等待，1 加载中，2 加载失败
-
+      status: 'waiting', // waiting loading error done
       offsetTemp: 0, // 缓存页码
       scrollTimer: null, // 定时器
       flagElement: window // 滚动元素
     }),
 
+    computed: {
+      renderText() {
+        return this.tips[this.status];
+      }
+    },
+
     watch: {
       offset(newVal) {
-        // 当新页码达到请求数时，绑定事件
+        if (newVal === 0) {
+          this.rmEvent();
+          return this.status = 'waiting';
+        }
         if (newVal === this.limit) return this.addEvent();
-
-        // 当新页码小于请求数时，移除事件
         if (newVal < this.limit) return this.rmEvent();
       }
     },
@@ -45,21 +61,16 @@
       loadData() {
         // 请求前同步页码
         this.offsetTemp = this.offset;
-        this.status = 1;
+        this.status = 'loading';
         this.method()
           .then(() => {
-            // 延迟 500 毫秒重置状态
             setTimeout(() => {
-              // 新增量少于请求，移除事件
-              if (this.offset - this.offsetTemp < this.limit) {
-                this.rmEvent();
-              }
-
-              this.status = 0;
+              if (this.offset - this.offsetTemp < this.limit) return this.rmEvent();
+              this.status = 'waiting';
             }, 500);
           })
           .catch(() => {
-            this.status = 2;
+            this.status = 'error';
           });
       },
 
@@ -67,28 +78,29 @@
         const element = this.flagElement === window ? document.documentElement : this.flagElement;
         const distance = element.offsetHeight - element.clientHeight - this.getScrollTop();
 
-        if (distance < this.bottom) return this.loadData();
+        if (distance < this.bottom) this.loadData();
       },
 
       reloadEvent() {
-        if (this.status !== 2) return;
-        this.loadData();
+        if (this.status === 'error') this.loadData();
       },
 
       scrollEvent() {
         // 有时浏览器不能及时移除事件
-        if (this.status !== 0 || this.offset < this.limit) return;
+        if (this.status !== 'waiting' || this.offset < this.limit) return;
 
         clearTimeout(this.scrollTimer);
         this.scrollTimer = setTimeout(this.lazyLoadData, 100);
       },
 
       addEvent() {
+        this.status = 'waiting';
         this.flagElement.addEventListener('scroll', this.scrollEvent);
       },
 
       rmEvent() {
         this.flagElement.removeEventListener('scroll', this.scrollEvent);
+        this.status = 'done';
       },
 
       getScrollTop() {
@@ -111,16 +123,13 @@
 
     events: {
       initLazy() {
-        if (this.offset !== 0) return;
-        this.loadData();
+        if (this.offset === 0) this.loadData();
       }
     },
 
     ready() {
       this.flagElement = this.getLazyFlag();
-
-      // 启动时有足够数据，直接绑定
-      if (this.offset === this.limit) return this.addEvent();
+      if (this.offset === this.limit) this.addEvent();
     },
 
     destroyed() {
@@ -130,17 +139,9 @@
 </script>
 
 <template>
-  <div class="lazy-wrap"
-       v-show="status === 1 || status === 2"
-       @click="reloadEvent">
-
-    <span class="lazy-loading" v-show="status === 1">
-      <img src="./assets/load.svg">
-      <span>正在加载...</span>
-    </span>
-
-    <span v-show="status === 2">加载失败，点此重新加载</span>
-
+  <div class="lazy-wrap" v-show="renderText" @click="reloadEvent">
+    <img src="./assets/load.svg" v-show="status === 'loading'">
+    <span class="lazy-text">{{ renderText }}</span>
   </div>
 </template>
 

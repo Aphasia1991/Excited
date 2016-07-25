@@ -1,26 +1,18 @@
-.lazy-wrap,
-.lazy-loading {
+.lazy-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.lazy-wrap {
   height: 80px;
   color: #555;
   font-size: 26px;
-}
 
-.lazy-loading {
   img {
     display: block;
+    margin-right: 15px;
     width: 30px;
     height: 30px;
     transform-origin: 50% 50%;
     animation: lazy-icon 1s linear infinite;
-  }
-  span {
-    margin-left: 15px;
   }
 }
 

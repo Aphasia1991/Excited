@@ -72,7 +72,7 @@ new Vue({
     this.$broadcast('initLazy');
 
     setTimeout(() => {
-      this.store = [];
+      // this.store = [];
       this.countdown = -9999;
     }, 5000);
   }
