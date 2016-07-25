@@ -46,17 +46,6 @@
       }
     },
 
-    watch: {
-      offset(newVal) {
-        if (newVal === 0) {
-          this.rmEvent();
-          return this.status = 'waiting';
-        }
-        if (newVal === this.limit) return this.addEvent();
-        if (newVal < this.limit) return this.rmEvent();
-      }
-    },
-
     methods: {
       loadData() {
         // 请求前同步页码
@@ -118,22 +107,37 @@
         }
 
         return window;
+      },
+
+      offsetWatcher() {
+        if (this.offset === 0) {
+          this.rmEvent();
+          return this.status = 'waiting';
+        }
+        if (this.offset === this.limit) return this.addEvent();
+        if (this.offset < this.limit) return this.rmEvent();
       }
+    },
+
+    watch: {
+      offset() {
+        this.offsetWatcher();
+      }
+    },
+
+    ready() {
+      this.flagElement = this.getLazyFlag();
+      this.offsetWatcher();
+    },
+
+    destroyed() {
+      this.rmEvent();
     },
 
     events: {
       initLazy() {
         if (this.offset === 0) this.loadData();
       }
-    },
-
-    ready() {
-      this.flagElement = this.getLazyFlag();
-      if (this.offset === this.limit) this.addEvent();
-    },
-
-    destroyed() {
-      this.rmEvent();
     }
   };
 </script>
