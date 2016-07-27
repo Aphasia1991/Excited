@@ -14,7 +14,6 @@ Compass 接收以下 `props` 属性：
 
 ```bash
 timeout       # [Number]   超时设置（默认 5000 毫秒）
-apihost       # [String]   restAPI 前缀
 show          # [Boolean]  是否显示界面，关闭时不请求地址名
 tips          # [Object]   loading / failed / fallback 提示文案
 resolve       # [Function] 成功获取 geohash 时执行，并代入参数 geohash

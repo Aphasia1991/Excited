@@ -1,6 +1,7 @@
 <script>
-  // 包装 fetch API
-  const $fetch = (url) => fetch(url)
+  const isApp = /Eleme/.test(navigator.userAgent);
+  const APIHOST = `//${document.domain.replace(/^(h|h5)\./, 'm.')}/restapi`;
+  const $fetch = url => fetch(url)
     .then(res => {
       const json = res.json();
       if (res.status >= 200 && res.status < 300) return json;
@@ -12,11 +13,6 @@
       timeout: {
         type: Number,
         default: 5000
-      },
-
-      apihost: {
-        type: String,
-        default: '//m.ele.me/restapi'
       },
 
       show: {
@@ -64,19 +60,24 @@
       // 一旦获取到 geohash，清空计时器，执行 resolve，获取地址名
       geohash(val) {
         if (!val) return;
-        clearTimeout(this.isTrying);
-
+        this.clearTrying();
         this.resolve(val);
         this.getLocName();
       }
     },
 
     methods: {
+      // 停止获取地址
+      clearTrying() {
+        window[isApp ? 'clearInterval' : 'clearTimeout'](this.isTrying);
+        this.isTrying = null;
+      },
+
       // 获取地址名称
       getLocName() {
         if (!this.show) return;
 
-        $fetch(this.apihost + '/v2/pois/' + this.geohash)
+        $fetch(APIHOST + '/v2/pois/' + this.geohash)
           .then(json => {
             this.locName = json.name;
           })
@@ -90,7 +91,7 @@
         if (this.apiLock) return;
         this.apiLock = true;
 
-        $fetch(this.apihost + '/v1/cities?type=guess')
+        $fetch(APIHOST + '/v1/cities?type=guess')
           .then(json => {
             this.apiHash = Geohash.encode(json.latitude, json.longitude);
           })
@@ -101,24 +102,24 @@
 
       // 获取浏览器地址
       getNavigatorHash() {
-        if (!navigator.geolocation || this.navHash) return;
+        if (!navigator.geolocation) return;
 
         navigator.geolocation.getCurrentPosition(position => {
-          this.navHash = Geohash.encode(position.coords.latitude, position.coords.longitude);
+          this[isApp ? 'navHash' : 'geohash'] = Geohash.encode(position.coords.latitude, position.coords.longitude);
         });
       },
 
       // 获取 App 地址
       getHybridHash() {
+        if (this.geohash) return;
         hybridAPI.getGlobalGeohash(geohash => {
-          this.geohash = geohash;
+          if (geohash) return this.geohash = geohash;
         });
       },
 
       // 选择最佳结果：Hybrid API > Navigator > restAPI
       selectBestLoc() {
-        clearTimeout(this.isTrying);
-        this.isTrying = null;
+        this.clearTrying();
 
         if (this.geohash) return;
         if (this.navHash) return this.geohash = this.navHash;
@@ -127,27 +128,17 @@
         this.reject();
       },
 
-      // 每隔 500 毫秒请求一次 Hybrid API 数据
-      // Hybird API 有坑，回调函数必然执行，但未取得时参数为空
-      loopTryHybrid() {
-        if (this.geohash || this.isTrying) return;
-
-        this.isTrying = setInterval(this.getHybridHash, 500);
-        setTimeout(this.selectBestLoc, this.timeout);
-      },
-
       // App 内部取地址模式
       useAppMode() {
-        const fallback = () => {
+        this.getHybridHash();
+        this.isTrying = setInterval(this.getHybridHash, 500);
+
+        setTimeout(() => {
           if (this.geohash) return;
           this.getNavigatorHash();
           this.getApiHash();
-        };
-
-        this.getHybridHash();
-        this.loopTryHybrid();
-
-        setTimeout(fallback, this.timeout / 2);
+        }, this.timeout / 2);
+        setTimeout(this.selectBestLoc, this.timeout);
       },
 
       // 外部取地址模式
@@ -156,16 +147,12 @@
 
         this.getNavigatorHash();
         this.getApiHash();
-        this.$watch('navHash', val => {
-          this.geohash = val;
-        });
       },
 
       // 选择模式
       getUserLoc() {
         if (this.geohash) return;
-        if (/Eleme/i.test(navigator.userAgent)) return this.useAppMode();
-        this.useExternalMode();
+        isApp ? this.useAppMode() : this.useExternalMode();
       }
     },
 
