@@ -79,7 +79,7 @@
 
         $fetch(APIHOST + '/v2/pois/' + this.geohash)
           .then(json => {
-            this.locName = json.name;
+            this.locName = json.name || this.tips.fallback;
           })
           .catch(() => {
             this.locName = this.tips.fallback;
@@ -167,13 +167,17 @@
 
 <template>
   <div class="compass-wrap" v-show="show" @click="getUserLoc">
-    <svg class="compass-location" v-if="geohash"
-      viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M32 7.405c-10.856 0-19.657 8.8-19.657 19.657 0 10.858 15.405 27.472 15.405 27.472 2.348 2.743 6.193 2.758 8.518-.013 0 0 15.392-16.6 15.392-27.457 0-10.858-8.8-19.658-19.658-19.658zm0 28.123a9.092 9.092 0 0 1-9.094-9.094c0-5.02 4.07-9.092 9.094-9.092a9.093 9.093 0 1 1 0 18.186z" fill-rule="evenodd"/></svg>
-    <svg class="compass-refresh" :class="[ isTrying ? 'compass-loading': '' ]" v-else
-      viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M52.255 32.99c.016-.335.025-.67.025-1.008C52.28 20.78 43.2 11.7 32 11.7a20.172 20.172 0 0 0-10.638 3.015 2.34 2.34 0 1 0 2.45 3.98A15.527 15.527 0 0 1 32 16.373c8.62 0 15.607 6.99 15.607 15.61 0 .337-.012.673-.034 1.008h-4.537l6.982 10 6.982-10h-4.745zM41.532 44.885c-.5 0-.964.155-1.344.423A15.527 15.527 0 0 1 32 47.63c-8.62 0-15.607-6.99-15.607-15.61 0-.34.012-.676.034-1.01h4.537l-6.982-9.998L7 31.01h4.745c-.016.335-.025.67-.025 1.008C11.72 43.22 20.8 52.3 32 52.3a20.17 20.17 0 0 0 10.64-3.015 2.34 2.34 0 0 0-1.107-4.404v.004z" fill-rule="evenodd"/></svg>
+    <template v-if="geohash">
+      <svg class="compass-location"
+        viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M32 7.405c-10.856 0-19.657 8.8-19.657 19.657 0 10.858 15.405 27.472 15.405 27.472 2.348 2.743 6.193 2.758 8.518-.013 0 0 15.392-16.6 15.392-27.457 0-10.858-8.8-19.658-19.658-19.658zm0 28.123a9.092 9.092 0 0 1-9.094-9.094c0-5.02 4.07-9.092 9.094-9.092a9.093 9.093 0 1 1 0 18.186z" fill-rule="evenodd"/></svg>
+      <span class="compass-name">{{ locName }}</span>
+    </template>
 
-    <span class="compass-name" v-if="geohash">{{ locName }}</span>
-    <span class="compass-tips" v-else>{{ locTips }}</span>
+    <template v-else>
+      <svg class="compass-refresh" :class="[ isTrying ? 'compass-loading': '' ]"
+        viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M52.255 32.99c.016-.335.025-.67.025-1.008C52.28 20.78 43.2 11.7 32 11.7a20.172 20.172 0 0 0-10.638 3.015 2.34 2.34 0 1 0 2.45 3.98A15.527 15.527 0 0 1 32 16.373c8.62 0 15.607 6.99 15.607 15.61 0 .337-.012.673-.034 1.008h-4.537l6.982 10 6.982-10h-4.745zM41.532 44.885c-.5 0-.964.155-1.344.423A15.527 15.527 0 0 1 32 47.63c-8.62 0-15.607-6.99-15.607-15.61 0-.34.012-.676.034-1.01h4.537l-6.982-9.998L7 31.01h4.745c-.016.335-.025.67-.025 1.008C11.72 43.22 20.8 52.3 32 52.3a20.17 20.17 0 0 0 10.64-3.015 2.34 2.34 0 0 0-1.107-4.404v.004z" fill-rule="evenodd"/></svg>
+      <span class="compass-tips">{{ locTips }}</span>
+    </template>
   </div>
 </template>
 
