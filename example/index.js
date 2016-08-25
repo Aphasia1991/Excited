@@ -19,7 +19,7 @@ new Vue({
   },
 
   data: () => ({
-    status: 2,
+    status: 1,
     limit: 10,
     countdown: 10,
     store: [],

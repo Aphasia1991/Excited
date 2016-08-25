@@ -28,13 +28,13 @@
 .loading-icon {
   z-index: 5;
   background: url('assets/icons.svg') no-repeat;
-  animation: loading-change 5.4s infinite steps(9),
+  animation: loading-change 4.8s infinite steps(8),
              loading-jump .3s ease-in-out infinite alternate;
 }
 
 @keyframes loading-change {
   to {
-    background-position: 0 -18em;
+    background-position: 0 100%;
   }
 }
 
